@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赏金女王 · 信息卡片页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f3f1;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #2e2b28;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .page-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* 主视觉区 – 轻卡片 */
+    .hero-card {
+      background: #fffffffa;
+      border: 1px solid #e2ddd7;
+      border-radius: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
+      padding: 3rem 2.5rem;
+      margin-bottom: 2.8rem;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+
+    .hero-card:hover {
+      box-shadow: 0 12px 28px rgba(0,0,0,0.07);
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 350;
+      letter-spacing: 2px;
+      color: #3d3833;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title span {
+      font-weight: 520;
+      color: #b78c5f;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #6b6259;
+      max-width: 520px;
+      margin: 1rem auto 0;
+      border-top: 1px dashed #ddd6cf;
+      padding-top: 1.2rem;
+    }
+
+    /* 卡片网格布局 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2.8rem;
+    }
+
+    @media (min-width: 640px) {
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .card-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: #fffffffc;
+      border: 1px solid #e4dfd9;
+      border-radius: 24px;
+      padding: 2rem 1.6rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 6px 12px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+      border-color: #d0c9c0;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+      background: #f3efe9;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      border-radius: 16px;
+      border: 1px solid #e1dad2;
+      color: #7a6e63;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin: 1rem 0 0.6rem;
+      color: #3f3a35;
+    }
+
+    .card p, .card ul {
+      font-size: 0.95rem;
+      color: #4f4842;
+      flex: 1;
+    }
+
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .card ul li {
+      padding: 0.3rem 0 0.3rem 1.2rem;
+      position: relative;
+    }
+
+    .card ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: #b78c5f;
+      font-weight: 700;
+    }
+
+    .card-soft-link {
+      margin-top: 1.2rem;
+      font-size: 0.92rem;
+      border-top: 1px solid #ece7e1;
+      padding-top: 0.9rem;
+    }
+
+    .card-soft-link a {
+      color: #7a6e63;
+      text-decoration: none;
+      border-bottom: 1px dotted #c9bfb4;
+      font-weight: 400;
+    }
+
+    .card-soft-link a:hover {
+      color: #b78c5f;
+      border-bottom-color: #b78c5f;
+    }
+
+    /* 自然链接段落 */
+    .narrative-block {
+      background: #fffffffa;
+      border: 1px solid #e2ddd7;
+      border-radius: 28px;
+      padding: 2.4rem 2.2rem;
+      margin-bottom: 2.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+
+    .narrative-block h2 {
+      font-weight: 380;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+      color: #3d3833;
+      margin-bottom: 1rem;
+      border-left: 4px solid #b78c5f;
+      padding-left: 1rem;
+    }
+
+    .narrative-block p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #4a443e;
+    }
+
+    .narrative-block p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .narrative-block a {
+      color: #7a6e63;
+      text-decoration: none;
+      border-bottom: 1px solid #cdc4b9;
+      transition: border-color 0.15s;
+    }
+
+    .narrative-block a:hover {
+      color: #b78c5f;
+      border-bottom-color: #b78c5f;
+    }
+
+    .faq-mini {
+      background: #fffffffc;
+      border: 1px solid #e4dfd9;
+      border-radius: 24px;
+      padding: 2rem 2rem 1.8rem;
+      margin-bottom: 2.8rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .faq-mini h3 {
+      font-weight: 380;
+      font-size: 1.4rem;
+      margin-bottom: 1.4rem;
+      color: #3d3833;
+      letter-spacing: 0.5px;
+    }
+
+    .faq-item {
+      margin-bottom: 1.2rem;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 450;
+      color: #4f4740;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+      border-left: 3px solid #dacfc5;
+      padding-left: 0.8rem;
+    }
+
+    .faq-item p {
+      color: #5f554c;
+      font-size: 0.93rem;
+      margin-left: 1.1rem;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #8b8176;
+      padding: 1.8rem 0 0.2rem;
+      border-top: 1px solid #e0d9d1;
+      margin-top: 1rem;
+    }
+
+    .tag-soft {
+      background: #efebe6;
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      color: #5e554b;
+      border: 1px solid #dbd3ca;
+      margin-right: 0.4rem;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #7b7168;
+      margin-top: 1rem;
+    }
+
+    .badge-return {
+      background: #ece6df;
+      border-radius: 50px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      color: #6b6056;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- 主视觉卡片 -->
+  <div class="hero-card">
+    <div class="badge-return">◈ 再次收藏 · 常看常新</div>
+    <div class="hero-title"><span>赏金</span>女王</div>
+    <div class="hero-sub">
+      信息归档 · 温和陪伴<br>
+      从一次访问到持续关注
+    </div>
+  </div>
+
+  <!-- 信息卡片网格（用途/适合人群/特点） -->
+  <div class="card-grid">
+    <!-- 用途卡片 -->
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>用途与场景</h3>
+      <p>浏览信息、了解动态、收藏线索。适合在闲暇时打开，随手翻阅或标记感兴趣的内容。</p>
+      <ul>
+        <li>日常信息浏览</li>
+        <li>兴趣标记与整理</li>
+        <li>再度回到熟悉页面</li>
+      </ul>
+      <div class="card-soft-link">
+        <span class="tag-soft">书签</span> 适合反复回来
+      </div>
+    </div>
+
+    <!-- 适合人群卡片 -->
+    <div class="card">
+      <div class="card-icon">👤</div>
+      <h3>适合人群</h3>
+      <p>习惯把好页面留在收藏夹的人、喜欢温和节奏而非急促跳转的读者、偶尔想回顾的访客。</p>
+      <ul>
+        <li>收藏型访客</li>
+        <li>轻度信息使用者</li>
+        <li>偏好稳定内容的浏览者</li>
+      </ul>
+      <div class="card-soft-link">
+        <span class="tag-soft">从容</span> 没有催促感
+      </div>
+    </div>
+
+    <!-- 特点卡片 -->
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>持续关注的节奏</h3>
+      <p>不必每天惦记，也不需要刻意记忆。把页面放在书签里，想起来的时候自然回来看看。</p>
+      <ul>
+        <li>无需频繁刷新</li>
+        <li>内容自然沉淀</li>
+        <li>再次访问依然熟悉</li>
+      </ul>
+      <div class="card-soft-link">
+        <span class="tag-soft">收藏向</span> 安静陪伴
+      </div>
+    </div>
+  </div>
+
+  <!-- 自然链接段落：从再次访问角度切入 -->
+  <div class="narrative-block">
+    <h2>再次打开 · 像翻到折角的一页</h2>
+    <p>
+      有时候我们只是想把一个页面留在手边。不一定要每天点开，但知道它在那里，就多了一份从容。
+      就像一本放在桌角的书，偶尔翻开，总能找到上次停留的地方。
+    </p>
+    <p>
+      如果你曾经把 <a href="https://queenbounty-pg.com">赏金女王</a> 加入收藏或记下地址，
+      这次回来也许会发现一些熟悉的段落，也可能看到些微变化。页面本身保持稳定的风格，
+      同时内容会自然生长，不会让人感到陌生。
+    </p>
+    <p>
+      不打扰、不催促，是这类页面的气质。你可以快速浏览，也可以慢慢读上几句。
+      收藏夹里多一个安静的角落，有时候比很多推送更让人安心。
+    </p>
+    <div class="small-note">—— 适合那些喜欢把好去处存起来的人</div>
+  </div>
+
+  <!-- FAQ 摘要卡片（FAQ 摘要，非完整问答） -->
+  <div class="faq-mini">
+    <h3>一些你可能想过的问题</h3>
+    <div class="faq-item">
+      <strong>这个页面会频繁变化吗？</strong>
+      <p>不会。风格和核心信息保持稳定，但内容会适度更新，不会让人有“跟不上”的感觉。</p>
+    </div>
+    <div class="faq-item">
+      <strong>我需要注册或留下信息吗？</strong>
+      <p>完全不需要。这是一个公开的信息页面，自由访问，和许多收藏型页面一样安静。</p>
+    </div>
+    <div class="faq-item">
+      <strong>为什么推荐放进收藏夹？</strong>
+      <p>当你觉得一个页面值得再次回来，收藏就是最轻量的方式。比搜索更快，比记忆更可靠。</p>
+    </div>
+    <div style="margin-top: 1.2rem; border-top: 1px solid #ece7e1; padding-top: 0.8rem; font-size: 0.9rem; color: #6f655c;">
+      <span class="tag-soft">FAQ 摘要</span> 更多细节可自然探索
+    </div>
+  </div>
+
+  <!-- 一句话再次嵌入链接 (完全自然) -->
+  <div style="background: #f7f4f0; border-radius: 20px; padding: 1.2rem 2rem; margin-bottom: 1.5rem; border: 1px solid #e4dfd9;">
+    <p style="color: #4a443e; text-align: center; font-size: 0.98rem;">
+      如果你觉得这个页面值得留着，不妨把 <a href="https://queenbounty-pg.com" style="color: #7a6e63; border-bottom: 1px dotted #cdc4b9; text-decoration: none;">赏金女王</a> 
+      放上书签栏。再次访问时，一切还是那么熟悉。
+    </p>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="site-footer">
+    <span style="letter-spacing: 1px;">信息卡片 · 收藏友好</span>
+    <br>
+    <span style="opacity: 0.7;">安静陪伴  ·  不打扰的浏览节奏</span>
+  </div>
+
+</div>
+</body>
+</html>
